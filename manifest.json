@@ -1,0 +1,42 @@
+{
+
+  "manifest_version": 2,
+  "name": "Inhuman Ads",
+  "version": "0.1",
+
+  "description": "Report screenshots of bad ads on Inhuman Ads",
+
+  "icons": {
+    "48": "icons/inhuman-ads-48.png"
+  },
+
+  "background": {
+    "scripts": [
+      "common/buildSettings.js",
+      "common/log.js",
+      "common/catcher.js",
+      "common/makeUuid.js",
+      "background/deviceInfo.js",
+      "background/analytics.js",
+      "background/communication.js",
+      "background/auth.js",
+      "background/main.js"
+    ]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://screenshots.firefox.com/*"],
+      "js": [
+        "common/buildSettings.js",
+        "common/log.js",
+        "common/catcher.js",
+        "content/callBackground.js",
+        "content/main.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ]
+}
