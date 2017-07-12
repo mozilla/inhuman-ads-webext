@@ -5,16 +5,19 @@
 
 this.main = (function() {
   let exports = {};
-  
+
   communication.register("uploadAd", catcher.watchFunction((sender, options) => {
-      log.warn("HELLO");
     let { shotId, shotDomain } = options;
     return auth.authHeaders().then((headers) => {
       headers["content-type"] = "application/json";
-      let body = JSON.stringify({shotId: shotId});
-      return fetch(buildSettings.inhumanAjaxUrl, {
-        method: "PUT",
+      let body = JSON.stringify({
+        shotId: shotId,
+        shotDomain: shotDomain
+      });
+      return fetch(buildSettings.inhumanAjaxUrl + "?action=inhuman_add_screenshot", {
+        method: "POST",
         mode: "cors",
+        credentials: "include",
         headers,
         body
       });
@@ -24,6 +27,7 @@ this.main = (function() {
         exc.popupMessage = "REQUEST_ERROR";
         throw exc;
       } else {
+        return resp.json();
       }
     }, (error) => {
       // FIXME: I'm not sure what exceptions we can expect
@@ -31,6 +35,10 @@ this.main = (function() {
       throw error;
     });
   }));
+
+  browser.runtime.onMessage.addListener((req, sender, sendResponse) => {
+    return communication.onMessage(req, sender, sendResponse);
+  });
 
   return exports;
 })();

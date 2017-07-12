@@ -16,8 +16,6 @@
       "common/log.js",
       "common/catcher.js",
       "common/makeUuid.js",
-      "background/deviceInfo.js",
-      "background/analytics.js",
       "background/communication.js",
       "background/auth.js",
       "background/main.js"
@@ -37,6 +35,9 @@
     }
   ],
   "permissions": [
-    "storage"
+    "cookies",
+    "storage",
+    "<all_urls>",
+    "*://localhost:8888/*"
   ]
 }

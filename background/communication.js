@@ -45,35 +45,6 @@ this.communication = (function() {
     registeredFunctions[name] = func;
   };
 
-  /** Send a message to bootstrap.js
-      Technically any worker can listen to this.  If the bootstrap wrapper is not in place, then this
-      will *not* fail, and will return a value of exports.NO_BOOTSTRAP  */
-  exports.sendToBootstrap = function(funcName, ...args) {
-    return browser.runtime.sendMessage({funcName, args}).then((result) => {
-      if (result.type === "success") {
-        return result.value;
-      }
-      throw new Error(`Error in ${funcName}: ${result.name || 'unknown'}`);
-    }, (error) => {
-      if (isBootstrapMissingError(error)) {
-        return exports.NO_BOOTSTRAP;
-      }
-      throw error;
-    });
-  };
-
-  function isBootstrapMissingError(error) {
-    // Note: some of this logic is copied into startBackground.js's getOldDeviceInfo call
-    if (!error) {
-      return false;
-    }
-    return ('errorCode' in error && error.errorCode === "NO_RECEIVING_END") ||
-      (!error.errorCode && error.message === "Could not establish connection. Receiving end does not exist.");
-  }
-
-
-  // A singleton/sentinel (with a name):
-  exports.NO_BOOTSTRAP = {name: "communication.NO_BOOTSTRAP"};
-
   return exports;
 })();
+null;

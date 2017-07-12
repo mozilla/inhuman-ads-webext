@@ -4,41 +4,7 @@
 
 "use strict";
 
-this.contentMain = (function() {
-
-  catcher.registerHandler((errorObj) => {
-    callBackground("reportError", errorObj);
-  });
-
-  function sendCustomEvent(name, detail) {
-    if (typeof detail == "object") {
-      // Note sending an object can lead to security problems, while a string
-      // is safe to transfer:
-      detail = JSON.stringify(detail);
-    }
-    document.dispatchEvent(new CustomEvent(name, {detail}));
-  }
-
-  document.addEventListener("request-login", catcher.watchFunction((event) => {
-    let shotId = event.detail;
-    catcher.watchPromise(callBackground("getAuthInfo", shotId || null).then((info) => {
-      sendCustomEvent("login-successful", {deviceId: info.deviceId, isOwner: info.isOwner});
-    }));
-  }));
-
-  function uploadAd() {
-    var [foo, id, site] = document.location.pathname.split('/');
-    catcher.watchPromise(
-      callBackground("uploadAd", {shotId: id, shotDomain: site})
-        .then((info) => {
-          alert(info);
-          sendCustomEvent("upload-successful");
-        })
-        .catch((e) => {
-          alert(e);
-        }));
-  }
-  
+this.main = (function() {
   function addButton() {
     var new_button = document.createElement('a');
     new_button.setAttribute('id', 'inhuman-ads-send');
@@ -50,8 +16,8 @@ this.contentMain = (function() {
       event.preventDefault();
       var [foo, id, site] = document.location.pathname.split('/');
       catcher.watchPromise(callBackground("uploadAd", {shotId: id, shotDomain: site}).then((info) => {
-        alert(info);
-        sendCustomEvent("upload-successful");
+        // navigate to edit page
+        location = info.editUrl;
       }).catch((e) => {
         alert(e);
       }));

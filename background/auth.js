@@ -40,7 +40,11 @@ this.auth = (function() {
 
   function register() {
     return new Promise((resolve, reject) => {
-      let registerUrl = buildSettings.inhumanAjaxUrl; //main.getBackend() + "/api/register";
+      let registerUrl = buildSettings.inhumanAjaxUrl + "?action=inhuman_register";
+      let body = JSON.stringify({
+        deviceId: registrationInfo.deviceId,
+        secret: registrationInfo.secret
+      });
       // TODO: replace xhr with Fetch #2261
       let req = new XMLHttpRequest();
       req.open("POST", registerUrl);
@@ -49,7 +53,7 @@ this.auth = (function() {
         if (req.status == 200) {
           log.info("Registered login");
           initialized = true;
-          saveAuthInfo(JSON.parse(req.responseText));
+          saveAuthInfo(req.getResponseHeader('Set-Cookie'), JSON.parse(req.responseText));
           resolve(true);
         } else {
           log.warn("Error in response:", req.responseText);
@@ -63,18 +67,19 @@ this.auth = (function() {
         exc.popupMessage = "LOGIN_CONNECTION_ERROR";
         reject(exc);
       });
-      req.send(JSON.stringify({
-        deviceId: registrationInfo.deviceId,
-        secret: registrationInfo.secret
-      }));
+      req.send(body);
     });
   }
 
   function login(options) {
     let { noRegister } = options || {};
     return new Promise((resolve, reject) => {
-      log.warn("HELLO");
-      let loginUrl = buildSettings.inhumanAjaxUrl; //main.getBackend() + "/api/login";
+      let loginUrl = buildSettings.inhumanAjaxUrl + "?action=inhuman_login";
+      let body = JSON.stringify({
+        action: "inhuman_login",
+        deviceId: registrationInfo.deviceId,
+        secret: registrationInfo.secret
+      });
       // TODO: replace xhr with Fetch #2261
       let req = new XMLHttpRequest();
       req.open("POST", loginUrl);
@@ -95,10 +100,11 @@ this.auth = (function() {
           error.popupMessage = "LOGIN_CONNECTION_ERROR";
           reject(error);
         } else {
+          // HTTP 200
           initialized = true;
           let jsonResponse = JSON.parse(req.responseText);
           log.info("Screenshots logged in");
-          saveAuthInfo(jsonResponse);
+          saveAuthInfo(req.getResponseHeader('Set-Cookie'), jsonResponse);
           resolve(true);
         }
       });
@@ -109,14 +115,12 @@ this.auth = (function() {
         reject(exc);
       });
       req.setRequestHeader("content-type", "application/json");
-      req.send(JSON.stringify({
-        deviceId: registrationInfo.deviceId,
-        secret: registrationInfo.secret
-      }));
+      req.send(body);
     });
   }
 
-  function saveAuthInfo(responseJson) {
+  function saveAuthInfo(cookieHeader, responseJson) {
+    log.info("Cookie header: " + cookieHeader);
     if (responseJson.sentryPublicDSN) {
       sentryPublicDSN = responseJson.sentryPublicDSN;
     }
@@ -138,13 +142,14 @@ this.auth = (function() {
   };
 
   exports.authHeaders = function() {
+    log.info("authHeaders: initialized: " + initialized);
     let initPromise = Promise.resolve();
     if (!initialized) {
       initPromise = login();
     }
     return initPromise.then(() => {
       if (authHeader) {
-        return {"x-screenshots-auth": authHeader};
+        return {"x-inhuman-auth": authHeader};
       }
       log.warn("No auth header available");
       return {};
