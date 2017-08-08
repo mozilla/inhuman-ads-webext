@@ -36,6 +36,32 @@ this.main = (function() {
     });
   }));
 
+  communication.register("updateShot", catcher.watchFunction((sender, data) => {
+    return auth.authHeaders().then((headers) => {
+      headers["content-type"] = "application/json";
+      let body = JSON.stringify(data);
+      return fetch(buildSettings.inhumanAjaxUrl + "?action=inhuman_update_screenshot", {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers,
+        body
+      });
+    }).then((resp) => {
+      if (!resp.ok) {
+        let exc = new Error(`Response failed with status ${resp.status}`);
+        exc.popupMessage = "REQUEST_ERROR";
+        throw exc;
+      } else {
+        return resp.json();
+      }
+    }, (error) => {
+      // FIXME: I'm not sure what exceptions we can expect
+      error.popupMessage = "CONNECTION_ERROR";
+      throw error;
+    });
+  }));
+
   browser.runtime.onMessage.addListener((req, sender, sendResponse) => {
     return communication.onMessage(req, sender, sendResponse);
   });
