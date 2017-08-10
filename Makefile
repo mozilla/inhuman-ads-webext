@@ -1,2 +1,2 @@
 zip:
-	zip Inhuman_Ads-0.1.zip `cat zip_files`
+	zip Inhuman_Ads-`jq -r .version manifest.json`.zip `cat zip_files`

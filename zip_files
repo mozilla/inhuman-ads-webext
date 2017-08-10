@@ -1,5 +1,4 @@
 ./.bowerrc
-./all_files
 ./background
 ./background/auth.js
 ./background/communication.js
