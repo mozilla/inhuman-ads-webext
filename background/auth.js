@@ -168,6 +168,12 @@ this.auth = (function() {
     return registrationInfo.registered;
   };
 
+  communication.register("requestLogin", catcher.watchFunction((sender, data) => {
+    return auth.authHeaders().then((headers) => {
+      return {success: true};
+    });
+  }));
+
   communication.register("getAuthInfo", (sender, options) => {
     return registrationInfoFetched.then(() => {
       let info = registrationInfo;

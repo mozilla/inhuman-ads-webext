@@ -6,3 +6,6 @@ vendor
 
 # Ignore .DS_Store files on OS X
 .DS_Store
+
+# Packaged zip to upload to AMO
+Inhuman_Ads-*.zip

@@ -1,4 +1,4 @@
-/* globals catcher, callBackground */
+/* globals catcher, callBackground, buildSettings */
 
 /* 
  * This is a content script added to all screenshots.firefox.com &
@@ -46,31 +46,25 @@ this.main = (function() {
         delete data["undefined"];
       });
 
-      console.log(JSON.stringify(data));
-
       catcher.watchPromise(callBackground("updateShot", data).then((info) => {
-        // navigate to edit page
-        //location = info.editUrl;
-        alert('ok');
+        location = buildSettings.inhumanHomeUrl;
       }).catch((e) => {
         alert('fail: ' + e);
       }));
-/*
-      $.post({
-        cache: false,
-        url : php_data.ajax_url + '?action=inhuman_update_screenshot',
-        type: "POST",
-        dataType : "json",
-        data : JSON.stringify(data),
-        success : function(callback){
-          console.log(JSON.parse(callback));
-          alert("Success!");
-        },
-        error : function(){
-          alert("Fail!");
-        }
-      });
-      */
+    });
+  }
+
+  function proxyPageEvent(pageEvent, backgroundEvent) {
+    document.addEventListener(pageEvent, function(e) {
+      var callerId = e.detail;
+      catcher.watchPromise(callBackground(backgroundEvent, {}).then((resp) => {
+        var eventId = callerId + '-failure';
+        if (resp.success)
+          eventId = callerId + '-success';
+        document.dispatchEvent(new CustomEvent(eventId));
+      }).catch((e) => {
+        alert(e);
+      }));
     });
   }
 
@@ -89,6 +83,7 @@ this.main = (function() {
     case "inhuman.sandmill.org":
     case "localhost:8888":
       addUpdatePostButton();
+      proxyPageEvent("inhumanRequestLogin", "requestLogin");
       break;
     }
   }
