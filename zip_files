@@ -1,9 +1,7 @@
-./.bowerrc
 ./background
 ./background/auth.js
 ./background/communication.js
 ./background/main.js
-./bower.json
 ./common
 ./common/buildSettings.js
 ./common/catcher.js
