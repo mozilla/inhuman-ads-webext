@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Inhuman Ads",
-  "version": "0.2",
+  "version": "0.3",
 
   "description": "Report screenshots of bad ads on Inhuman Ads",
 
@@ -42,7 +42,6 @@
     }
   ],
   "permissions": [
-    "cookies",
     "storage",
     "<all_urls>",
     "*://localhost:8888/*"

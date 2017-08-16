@@ -10,6 +10,10 @@
 
 this.main = (function() {
   function addSendShotButton() {
+    // check if expire widget is present (as proxy for whether user took this screenshot)
+    if (document.getElementsByClassName('expire-widget').length != 1)
+      return;
+
     var new_button = document.createElement('a');
     new_button.setAttribute('id', 'inhuman-ads-send');
     new_button.setAttribute('href', '#');
