@@ -87,6 +87,8 @@ this.main = (function() {
       break;
     case "inhumanads.com":
     case "inhuman.sandmill.org":
+    case "inhumanstage.wpengine.com":
+    case "inhumanprod.wpengine.com":
     case "localhost:8888":
       addUpdatePostButton();
       proxyPageEvent("inhumanRequestLogin", "requestLogin");
