@@ -1,4 +1,4 @@
-/* globals catcher, callBackground, buildSettings */
+/* globals catcher, callBackground, getSettings */
 
 /* 
  * This is a content script added to all screenshots.firefox.com &
@@ -27,7 +27,7 @@ this.main = (function() {
         // navigate to edit page
         location = info.editUrl;
       }).catch((e) => {
-        alert(e);
+        console.log('sending shot failed: ' + e);
       }));
       
     };
@@ -51,9 +51,11 @@ this.main = (function() {
       });
 
       catcher.watchPromise(callBackground("updateShot", data).then((info) => {
-        location = buildSettings.inhumanHomeUrl;
+        getSettings().then((settings) => {
+          location = settings.serverUrl;
+        });
       }).catch((e) => {
-        alert('fail: ' + e);
+        console.log('updating post failed: ' + e);
       }));
     });
   }
@@ -67,7 +69,7 @@ this.main = (function() {
           eventId = callerId + '-success';
         document.dispatchEvent(new CustomEvent(eventId));
       }).catch((e) => {
-        alert(e);
+        console.log('event dispatch failed: ' + e);
       }));
     });
   }

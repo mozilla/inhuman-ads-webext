@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Inhuman Ads",
-  "version": "0.3",
+  "version": "0.4",
 
   "description": "Report screenshots of bad ads on Inhuman Ads",
 
@@ -16,6 +16,7 @@
       "common/log.js",
       "common/catcher.js",
       "common/makeUuid.js",
+      "common/getSettings.js",
       "background/communication.js",
       "background/auth.js",
       "background/main.js"
@@ -36,11 +37,18 @@
         "common/buildSettings.js",
         "common/log.js",
         "common/catcher.js",
+        "common/getSettings.js",
         "content/callBackground.js",
         "content/main.js"
       ]
     }
   ],
+
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true
+  },
+
   "permissions": [
     "storage",
     "<all_urls>",
