@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Inhuman Ads",
-  "version": "0.5",
+  "version": "0.6",
 
   "description": "Report screenshots of bad ads on Inhuman Ads",
 
@@ -29,6 +29,8 @@
         "*://screenshots.firefox.com/*",
         "*://inhumanads.com/*",
         "*://inhuman.sandmill.org/*",
+        "*://inhumanprod.wpengine.com/*",
+        "*://inhumanstage.wpengine.com/*",
         "*://localhost/*",
         "*://localhost:8888/*"
       ],

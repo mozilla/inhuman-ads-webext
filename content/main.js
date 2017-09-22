@@ -52,7 +52,7 @@ this.main = (function() {
 
       catcher.watchPromise(callBackground("updateShot", data).then((info) => {
         getSettings().then((settings) => {
-          location = settings.serverUrl;
+          location = settings.serverUrl + "?nocache=" + (new Date()).getTime();
         });
       }).catch((e) => {
         console.log('updating post failed: ' + e);
@@ -95,7 +95,6 @@ this.main = (function() {
       break;
     }
   }
-
   if (!document.getElementById('inhuman-ads-setup'))
     setup();
 
