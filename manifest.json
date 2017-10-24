@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Inhuman Ads",
-  "version": "0.6",
+  "version": "0.7",
 
   "description": "Report screenshots of bad ads on Inhuman Ads",
 
@@ -28,7 +28,6 @@
       "matches": [
         "*://screenshots.firefox.com/*",
         "*://inhumanads.com/*",
-        "*://inhuman.sandmill.org/*",
         "*://inhumanprod.wpengine.com/*",
         "*://inhumanstage.wpengine.com/*",
         "*://localhost/*",
@@ -53,7 +52,11 @@
 
   "permissions": [
     "storage",
-    "<all_urls>",
+    "*://screenshots.firefox.com/*",
+    "*://inhumanads.com/*",
+    "*://inhumanprod.wpengine.com/*",
+    "*://inhumanstage.wpengine.com/*",
+    "*://localhost/*",
     "*://localhost:8888/*"
   ]
 }
