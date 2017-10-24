@@ -27,7 +27,7 @@
     {
       "matches": [
         "*://screenshots.firefox.com/*",
-        "*://inhumanads.com/*",
+        "*://inhumanads.com/*"
       ],
       "js": [
         "vendor/jquery/dist/jquery.min.js",
@@ -49,6 +49,6 @@
   "permissions": [
     "storage",
     "*://screenshots.firefox.com/*",
-    "*://inhumanads.com/*",
+    "*://inhumanads.com/*"
   ]
 }
