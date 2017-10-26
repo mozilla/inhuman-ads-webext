@@ -51,10 +51,14 @@ this.main = (function() {
 
     function setup() {
       // Add a hidden element we track to prevent modifying the page twice
-      var e = document.createElement('span');
-      e.setAttribute('id', 'inhuman-ads-setup');
-      e.style = 'display: none;';
-      document.documentElement.appendChild(e);
+
+      catcher.watchPromise(callBackground("addonVersion").then((version) => {
+        var e = document.createElement('input');
+        e.setAttribute('id', 'inhuman-ads-version');
+        e.setAttribute('type', 'hidden');
+        e.setAttribute('value', version);
+        document.documentElement.appendChild(e);
+      }));
 
       switch (document.location.host) {
       case "screenshots.firefox.com":
@@ -62,7 +66,7 @@ this.main = (function() {
         break;
       }
     }
-    if (!document.getElementById('inhuman-ads-setup'))
+    if (!document.getElementById('inhuman-ads-version'))
       setup();
   };
 })();

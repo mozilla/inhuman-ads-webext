@@ -68,6 +68,12 @@ this.main = (function() {
     return communication.onMessage(req, sender, sendResponse);
   });
 
+  communication.register("addonVersion", catcher.watchFunction((sender, data) => {
+    return browser.management.getSelf().then(function(info) {
+      return info.version;
+    });
+
+  }));
   return exports;
 })();
 null;
