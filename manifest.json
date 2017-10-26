@@ -2,7 +2,7 @@
 
   "manifest_version": 2,
   "name": "Inhuman Ads",
-  "version": "0.9",
+  "version": "0.10",
 
   "description": "Report screenshots of bad ads on Inhuman Ads",
 
@@ -50,6 +50,5 @@
     "storage",
     "*://screenshots.firefox.com/*",
     "*://inhumanads.com/*",
-    "*://localhost/*"
   ]
 }
