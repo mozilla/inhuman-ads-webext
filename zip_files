@@ -1,16 +1,2 @@
-./background/auth.js
-./background/communication.js
-./background/main.js
-./common/buildSettings.js
-./common/catcher.js
-./common/getSettings.js
-./common/log.js
-./common/makeUuid.js
-./content/callBackground.js
-./content/main.js
 ./icons/inhuman-ads-48.png
 ./manifest.json
-./options/options.html
-./options/options.js
-./vendor/jquery/dist/jquery.min.js
-./vendor/jquery-serializeForm/dist/jquery-serializeForm.min.js
