@@ -2,53 +2,11 @@
 
   "manifest_version": 2,
   "name": "Inhuman Ads",
-  "version": "0.10",
+  "version": "0.2",
 
-  "description": "Report screenshots of bad ads on Inhuman Ads",
+  "description": "Inhuman Ads has shut down. You may uninstall this extension at any time. Thank you for participating!",
 
   "icons": {
     "48": "icons/inhuman-ads-48.png"
-  },
-
-  "background": {
-    "scripts": [
-      "common/buildSettings.js",
-      "common/log.js",
-      "common/catcher.js",
-      "common/makeUuid.js",
-      "common/getSettings.js",
-      "background/communication.js",
-      "background/auth.js",
-      "background/main.js"
-    ]
-  },
-
-  "content_scripts": [
-    {
-      "matches": [
-        "*://screenshots.firefox.com/*",
-        "*://inhumanads.com/*"
-      ],
-      "js": [
-        "vendor/jquery/dist/jquery.min.js",
-        "common/buildSettings.js",
-        "common/log.js",
-        "common/catcher.js",
-        "common/getSettings.js",
-        "content/callBackground.js",
-        "content/main.js"
-      ]
-    }
-  ],
-
-  "options_ui": {
-    "page": "options/options.html",
-    "browser_style": true
-  },
-
-  "permissions": [
-    "storage",
-    "*://screenshots.firefox.com/*",
-    "*://inhumanads.com/*",
-  ]
+  }
 }
